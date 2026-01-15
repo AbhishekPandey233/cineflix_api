@@ -38,7 +38,6 @@ const authLimiter = rateLimit({
   skipSuccessfulRequests: true, // Only count failed attempts
 });
 
-// =================== MIDDLEWARE ===================
 
 app.use(express.json()); // Parse JSON
 app.use(bodyParser.urlencoded({ extended: true })); // Parse URL-encoded
