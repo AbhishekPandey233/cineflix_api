@@ -2,11 +2,14 @@ const express = require("express");
 const router = express.Router();
 const { protect } = require("../middleware/auth");
 
+const upload = require("../middleware/uploadItemPhoto"); // ✅ NEW
+
 const {
   createCustomer,
   updateCustomer,
   deleteCustomer,
   loginCustomer,
+  uploadProfilePicture, // ✅ NEW
 } = require("../controller/customer_controller");
 
 // Create a customer
@@ -20,6 +23,10 @@ router.put("/:id", protect, updateCustomer);
 
 // Delete a customer (protected route)
 router.delete("/:id", protect, deleteCustomer);
+
+// ✅ NEW: Upload profile picture (protected route)
+// field name must be "photo" from Flutter multipart
+router.post("/:id/profile-picture", protect, upload.single("photo"), uploadProfilePicture);
 
 router.get("/", protect, async (req, res) => {
   const Customer = require("../models/customer_model");
